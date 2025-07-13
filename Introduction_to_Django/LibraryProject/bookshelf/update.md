@@ -7,7 +7,7 @@
 # Update the title of the book to "Nineteen Eighty-Four"
 
 ```python
->>> from book_shelf.models import Book
+>>> from bookshelf.models import Book
 
 
 # Get the book and update title

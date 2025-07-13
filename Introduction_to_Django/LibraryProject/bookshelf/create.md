@@ -1,7 +1,7 @@
 # Create a Book instance
 
 ```python
->>> from book_shelf.models import Book
+>>> from bookshelf.models import Book
 
 # Create a new book instance
 book = Book.objects.create(

@@ -7,7 +7,7 @@
 # Retrieve all attributes of the book
 
 ```python
->>> from book_shelf.models import Book
+>>> from bookshelf.models import Book
 
 
 # Retrieve the book with title "1984"
