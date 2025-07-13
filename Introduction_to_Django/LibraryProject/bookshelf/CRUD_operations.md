@@ -6,14 +6,14 @@
 - Update (تعديل)
 - Delete (حذف)
 
-لكائن Book باستخدام Django ORM من داخل الـ shell.
+لكائن Book باستخدام Django ORM من داخل الـ shell، مع استخدام التطبيق book_shelf.
 
 ---
 
 ## 🟢 1. Create – إنشاء كتاب
 
 ```python
->>> from book_store.models import Book
+>>> from book_shelf.models import Book
 
 >>> book = Book.objects.create(
 ...     title="1984",
@@ -38,8 +38,13 @@
 
 >>> print(book.title)
 # Nineteen Eighty-Four
+>>> book.title = "Nineteen Eighty-Four"
+>>> book.save()
+
+>>> print(book.title)
+# Nineteen Eighty-Four
 >>> book.delete()
-# (1, {'book_store.Book': 1})
+# (1, {'book_shelf.Book': 1})
 
 >>> Book.objects.all()
 # <QuerySet []>

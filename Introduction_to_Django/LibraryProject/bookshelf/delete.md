@@ -7,7 +7,7 @@
 # Delete the book and confirm deletion
 
 ```python
-from book_store.models import Book
+>>> from book_shelf.models import Book
 
 # Delete the book
 book = Book.objects.get(title="Nineteen Eighty-Four")

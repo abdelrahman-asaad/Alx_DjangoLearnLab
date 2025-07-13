@@ -7,7 +7,8 @@
 # Update the title of the book to "Nineteen Eighty-Four"
 
 ```python
-from book_store.models import Book
+>>> from book_shelf.models import Book
+
 
 # Get the book and update title
 book = Book.objects.get(title="1984")

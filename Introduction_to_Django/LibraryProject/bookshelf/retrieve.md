@@ -7,7 +7,8 @@
 # Retrieve all attributes of the book
 
 ```python
-from book_store.models import Book
+>>> from book_shelf.models import Book
+
 
 # Retrieve the book with title "1984"
 book = Book.objects.get(title="1984")
