@@ -10,8 +10,9 @@ from relationship_app.models import Author, Book, Library, Librarian
 # 1. عرض كل الكتب لمؤلف معين
 author_name = 'Ahmed Khaled Tawfik'
 author = Author.objects.get(name=author_name) #object
+books_by_author = Book.objects.filter(author=author)
 print(f"Books by {author.name}:")
-for book in author.books.all():  # .books من related_name
+for book in books_by_author :                                    #for book in author.books.all():  # .books من related_name
     print("-", book.title)
 #مثال علي الناتج
 #Books by Ahmed Khaled Tawfik:
