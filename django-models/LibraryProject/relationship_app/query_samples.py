@@ -12,7 +12,7 @@ author_name = 'Ahmed Khaled Tawfik'
 author = Author.objects.get(name=author_name) #object
 books_by_author = Book.objects.filter(author=author)
 print(f"Books by {author.name}:")
-for book in books_by_author :                                    #for book in author.books.all():  # .books من related_name
+for book in books_by_author :                                    #for book in author.books.all():  # .books من related_name   when 13 is del
     print("-", book.title)
 #مثال علي الناتج
 #Books by Ahmed Khaled Tawfik:
@@ -36,7 +36,7 @@ for book in library.books.all():  # books هي ManyToManyField داخل Library
 # 3. إحضار أمين مكتبة معينة
 library_name = 'Cairo Library'
 library = Library.objects.get(name=library_name)  #object
-librarian = library.librarian  # related_name في OneToOneField
+librarian = Librarian.objects.get(library=library)                    #or       #librarian = library.librarian  # related_name في OneToOneField
 print(f"\nLibrarian of {library.name}: {librarian.name}")
 #مثال علي الناتج
 #Librarian of Cairo Library: Sara Youssef
