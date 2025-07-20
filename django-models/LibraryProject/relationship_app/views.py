@@ -30,7 +30,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 
-def signup_view(request):
+def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -39,7 +39,7 @@ def signup_view(request):
             return redirect('profile')
     else:
         form = UserCreationForm()
-    return render(request, "registration/signup.html", {"form": form})
+    return render(request, "relationship_app/register.html", {"form": form})
 
 
 
