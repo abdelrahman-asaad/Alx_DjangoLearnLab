@@ -25,13 +25,21 @@ class LibraryDetailView(DetailView):
 </ul>
 '''
 #_____________
+# views.py
 from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
 
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')  # بعد التسجيل يوجه المستخدم لصفحة تسجيل الدخول
-    template_name = 'registration/signup.html'
+def signup_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # ← ده السطر اللي بيدور عليه
+            return redirect('profile')
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form": form})
+
 
 

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import list_books, LibraryDetailView, SignUpView
+from .views import list_books, LibraryDetailView, signup_view
 
 urlpatterns = [
     path('books/', list_books, name='book_list'),
@@ -8,7 +8,6 @@ urlpatterns = [
 
     # auth URLs
     path('accounts/', include('django.contrib.auth.urls')),  # login, logout, password_reset...
-    path('signup/', views.SignUpView.as_view(), name='signup'),  # view للتسجيل
+    path('signup/', signup_view, name='signup'),  # view للتسجيل
 ]
 
-]
