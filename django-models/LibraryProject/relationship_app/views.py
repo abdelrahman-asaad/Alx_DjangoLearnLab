@@ -85,8 +85,8 @@ from django.contrib.auth.decorators import permission_required
 from .models import Book
 from .forms import BookForm  # يجب أن تكون عامل فورم مسبقًا للـ Book
 
-@permission_required('relationship_app.can_add_book', raise_exception=True)
-def add_book_view(request):
+@permission_required('relationship_app.can_add_book', raise_exception=True) #in models.py
+def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
@@ -96,8 +96,8 @@ def add_book_view(request):
         form = BookForm()
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
-@permission_required('relationship_app.can_change_book', raise_exception=True)
-def edit_book_view(request, pk):
+@permission_required('relationship_app.can_change_book', raise_exception=True)  #in models.py
+def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
         form = BookForm(request.POST, instance=book)
@@ -108,7 +108,7 @@ def edit_book_view(request, pk):
         form = BookForm(instance=book)
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
-@permission_required('relationship_app.can_delete_book', raise_exception=True)
+@permission_required('relationship_app.can_delete_book', raise_exception=True)  #in models.py
 def delete_book_view(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
