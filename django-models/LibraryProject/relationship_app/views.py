@@ -66,3 +66,52 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
+
+#____________________
+#✅ إنشاء ملف forms.py في مجلد relationship_app/
+#افتح مجلد relationship_app، واعمل ملف جديد اسمه forms.py، وداخل الملف ده حط الكود التالي:
+
+
+#from django import forms
+#from .models import Book
+
+#class BookForm(forms.ModelForm):
+#    class Meta:
+#        model = Book
+#        fields = ['title', 'author']
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import permission_required
+from .models import Book
+from .forms import BookForm  # يجب أن تكون عامل فورم مسبقًا للـ Book
+
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book_view(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'relationship_app/book_form.html', {'form': form})
+
+@permission_required('relationship_app.can_change_book', raise_exception=True)
+def edit_book_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'relationship_app/book_form.html', {'form': form})
+
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('book_list')
+    return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
