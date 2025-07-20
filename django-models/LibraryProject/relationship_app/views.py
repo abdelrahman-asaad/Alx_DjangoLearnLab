@@ -60,7 +60,7 @@ def admin_view(request):
 
 @user_passes_test(check_role('Librarian'))
 def librarian_view(request):
-    return render(request, 'librarian_view.html')
+    return render(request, 'relationship_app/librarian_view.html')
 
 @user_passes_test(check_role('Member'))
 def member_view(request):
