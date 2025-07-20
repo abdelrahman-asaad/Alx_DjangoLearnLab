@@ -30,7 +30,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 
-def register(request):
+def register(request):            #function-based view to sign-up
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -41,5 +41,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, "relationship_app/register.html", {"form": form})
 
+#عشان نقدر نكتب في القالب مثلًا: {{ form }} أو {{ form.username }} وغيره.
+#username is attritbtute in UserCreationForm class >>> username, password1 and password2 are attribtutes in UserCreationForm class
 
 
