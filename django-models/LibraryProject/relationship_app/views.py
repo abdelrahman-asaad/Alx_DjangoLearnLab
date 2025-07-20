@@ -109,7 +109,7 @@ def edit_book(request, pk):
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
 @permission_required('relationship_app.can_delete_book', raise_exception=True)  #in models.py
-def delete_book_view(request, pk):
+def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
         book.delete()
