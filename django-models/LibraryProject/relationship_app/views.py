@@ -64,5 +64,5 @@ def librarian_view(request):
 
 @user_passes_test(check_role('Member'))
 def member_view(request):
-    return render(request, 'member_view.html')
+    return render(request, 'relationship_app/member_view.html')
 
