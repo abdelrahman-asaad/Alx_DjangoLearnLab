@@ -153,12 +153,25 @@ SECURE_HSTS_PRELOAD = True # use HTTPS always not allowing HTTP for even first t
 SESSION_COOKIE_SECURE:True # Set to True to ensure session cookies are only transmitted over HTTPS.
 CSRF_COOKIE_SECURE:True # Set to True to ensure CSRF cookies are only transmitted over HTTPS.
 
-X_FRAME_OPTIONS:"DENY" # Set to "DENY" to prevent your site from being framed and protect against clickjacking.
+X_FRAME_OPTIONS:'DENY' # Set to "DENY" to prevent your site from being framed and protect against clickjacking.
 SECURE_CONTENT_TYPE_NOSNIFF:True # Set to True to prevent browsers from MIME-sniffing a response away from the declared content-type.
 SECURE_BROWSER_XSS_FILTER:True # Set to True to enable the browser’s XSS filtering and help prevent cross-site scripting attacks.
 
 
 '''# SECURITY.md
+تم إنشاء ملف توثيق أمني باسم Security Documentation يحتوي على كافة التعديلات التي تم تطبيقها لتأمين تطبيق Django الخاص بك، خاصة ما يتعلق بـ HTTPS والإعدادات المرتبطة به مثل:
+
+تفعيل HSTS وخياراته (SECURE_HSTS_SECONDS, INCLUDE_SUBDOMAINS, PRELOAD)
+
+تأمين الكوكيز (SESSION_COOKIE_SECURE, CSRF_COOKIE_SECURE)
+
+الحماية من XSS و MIME sniffing
+
+استخدام CSRF tokens داخل النماذج
+
+الحماية من SQL Injection باستخدام Django ORM
+
+إمكانية إضافة Content Security Policy (CSP) باستخدام django-csp
 
 # Security Hardening Documentation – LibraryProject
 
