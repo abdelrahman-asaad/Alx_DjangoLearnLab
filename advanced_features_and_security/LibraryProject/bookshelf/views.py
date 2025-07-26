@@ -6,8 +6,6 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import Book
-from .forms import BookForm  # تأكد أنك عامل form
-from django.views.decorators.csrf import csrf_protect
 
 
 @permission_required('bookshelf.can_view', raise_exception=True) #if true >> access denied 403
@@ -61,10 +59,13 @@ def delete_book(request, book_id):
 - يمكن إدارة المستخدمين والمجموعات من خلال لوحة تحكم Django Admin.
 '''    
 #__________________________________security
+from .forms import ExampleForm  # تأكد أنك عامل form
+from django.views.decorators.csrf import csrf_protect
+
 @csrf_protect  # This is optional, because Django middleware handles it globally 
 def create_book_view(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)  #BookForm in forms.py
+        form = ExampleForm(request.POST)  #ExampleForm in forms.py
         if form.is_valid():
             form.save()
             return redirect('book_list') #book_list is name in urls.py
