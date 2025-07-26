@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4yp5+05^+a=+pd!q3ea487(s13ep1jkr(#zdw!4)96z-o_yw3o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True 
 
 ALLOWED_HOSTS = []
 
@@ -124,3 +124,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'  # غير اسم app حسب مشروعك
+
+#_________security_____
+# أمان المتصفح
+DEBUG = False  # في بيئة الإنتاج فقط
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# إرسال الكوكيز عبر HTTPS فقط
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# اختياري - إجبار HTTPS
+SECURE_SSL_REDIRECT = True
+
+# حماية من هجمات XSS في الوسائط
+SECURE_REFERRER_POLICY = "strict-origin"
