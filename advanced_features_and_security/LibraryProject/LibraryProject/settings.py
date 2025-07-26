@@ -134,10 +134,116 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # إرسال الكوكيز عبر HTTPS فقط
 CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True #to redirect all non-HTTPS requests to HTTPS.
 
 # اختياري - إجبار HTTPS
 SECURE_SSL_REDIRECT = True
 
 # حماية من هجمات XSS في الوسائط
 SECURE_REFERRER_POLICY = "strict-origin"
+
+SECURE_HSTS_SECONDS:31536000 # Set an appropriate value (e.g., 31536000 for one year) to instruct browsers to only access the site via HTTPS 
+#for the specified time.
+
+#Set to True to include all subdomains in the HSTS policy and to allow preloading.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True #HTTPS for also subdomains not just the main domain 
+SECURE_HSTS_PRELOAD = True # use HTTPS always not allowing HTTP for even first time
+
+
+SESSION_COOKIE_SECURE:True # Set to True to ensure session cookies are only transmitted over HTTPS.
+CSRF_COOKIE_SECURE:True # Set to True to ensure CSRF cookies are only transmitted over HTTPS.
+
+X_FRAME_OPTIONS:"DENY" # Set to "DENY" to prevent your site from being framed and protect against clickjacking.
+SECURE_CONTENT_TYPE_NOSNIFF:True # Set to True to prevent browsers from MIME-sniffing a response away from the declared content-type.
+SECURE_BROWSER_XSS_FILTER:True # Set to True to enable the browser’s XSS filtering and help prevent cross-site scripting attacks.
+
+
+'''# SECURITY.md
+
+# Security Hardening Documentation – LibraryProject
+
+## 🔐 HTTPS & Security Settings
+
+### 1. DEBUG = False
+Used in production to prevent exposure of sensitive error pages.
+```python
+DEBUG = False
+```
+
+### 2. ALLOWED_HOSTS
+Specifies valid domains Django can serve.
+```python
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com', '127.0.0.1']
+```
+
+### 3. HTTPS Enforcement
+Redirects all HTTP requests to HTTPS.
+```python
+SECURE_SSL_REDIRECT = True
+```
+
+### 4. HTTP Strict Transport Security (HSTS)
+Forces browsers to use HTTPS.
+```python
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+```
+
+### 5. Secure Cookies
+Ensures cookies are only sent over HTTPS.
+```python
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+```
+
+### 6. XSS and MIME Type Protection
+```python
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+```
+
+## 🧾 CSRF Protection in Templates
+All HTML forms include {% csrf_token %}:
+```html
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+```
+
+## 🔎 Input Sanitization using Django Forms
+Example in forms.py:
+```python
+def clean_title(self):
+    title = self.cleaned_data.get('title')
+    if "<script>" in title:
+        raise forms.ValidationError("Invalid title")
+    return title
+```
+
+## 🛡️ SQL Injection Prevention
+All data access is done via Django ORM:
+```python
+Book.objects.filter(title__icontains=query)
+```
+
+## 🔒 Recommended Grouping in settings.py
+```python
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+```
+
+## ⛓️ Optional CSP Middleware
+Can be added via `django-csp` for enhanced protection from XSS attacks.
+'''
