@@ -7,6 +7,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import Book
 from .forms import BookForm  # تأكد أنك عامل form
+from django.views.decorators.csrf import csrf_protect
+
 
 @permission_required('bookshelf.can_view', raise_exception=True) #if true >> access denied 403
 def book_list(request):
@@ -58,3 +60,31 @@ def delete_book(request, book_id):
 - تم تأمين الـ views باستخدام @permission_required.
 - يمكن إدارة المستخدمين والمجموعات من خلال لوحة تحكم Django Admin.
 '''    
+#__________________________________security
+@csrf_protect  # This is optional, because Django middleware handles it globally 
+def create_book_view(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)  #BookForm in forms.py
+        if form.is_valid():
+            form.save()
+            return redirect('book_list') #book_list is name in urls.py
+    else:
+        form = BookForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form}) #anyway render this html page
+
+'''# form_example.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Form</title>
+</head>
+<body>
+    <h2>Create Book</h2>
+    <form method="POST">
+        {% csrf_token %}  <!-- Protect against CSRF -->
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>'''    
