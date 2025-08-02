@@ -16,4 +16,5 @@ router.register(r'books', BookViewSet, basename='book')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+path('books/', BookList.as_view(), name='book-list'),  # Maps to the BookList view
 ]
