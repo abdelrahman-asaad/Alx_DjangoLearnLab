@@ -3,13 +3,15 @@ from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .serializers import BookSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 # List all books (GET /books/)
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]  # Public access
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'author', 'publication_year']
 #permission_classes is built-in to DRF and allows you to set permissions for the view.
 
 
@@ -31,12 +33,12 @@ class BookCreateView(generics.CreateAPIView): #CreateAPIView is used for creatin
         serializer.save()
 
 #perfom_create is a built-in method that allows you to customize the save behavior
-# when creating a new object. -and it is called automatically when you 
-# submit a POST request to the view 'BookCreateView'.
+# when creating a new object.
+# -and it is called automatically when you submit a POST request to the view 'BookCreateView'.
 # it takes a serializer instance as an argument and allows you to call save() on it.
 # This is useful for adding additional logic or fields before saving the object.    
-#serializer is an built-in instance of the serializer class 'BookSerializer' that is used to validate 
-# and save the data.
+#serializer is an built-in instance of the serializer class 'BookSerializer' that is
+# used to validate and save the data.
 
 
 # Update a book (PUT/PATCH /books/<id>/)
