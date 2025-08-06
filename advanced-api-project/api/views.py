@@ -1,5 +1,6 @@
 # Create your views here.
-from rest_framework import generics, permissions
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Book
 from .serializers import BookSerializer
 
@@ -33,7 +34,8 @@ class BookCreateView(generics.CreateAPIView): #CreateAPIView is used for creatin
 # when creating a new object. 
 # it takes a serializer instance as an argument and allows you to call save() on it.
 # This is useful for adding additional logic or fields before saving the object.    
-
+#serializer is an built-in instance of the serializer class 'BookSerializer' that is used to validate 
+# and save the data.
 
 
 # Update a book (PUT/PATCH /books/<id>/)
