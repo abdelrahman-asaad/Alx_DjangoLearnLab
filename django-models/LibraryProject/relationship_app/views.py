@@ -94,19 +94,21 @@ def add_book(request):
             return redirect('book_list')
     else:
         form = BookForm()
+   
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
 @permission_required('relationship_app.can_change_book', raise_exception=True)  #in models.py
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+    if request.method == 'POST': # المستخدم بعت بيانات من فورم
+        form = BookForm(request.POST, instance=book)  #استقبل البيانات اللي المستخدم كتبها (request.POST) #اربطها مع الكتاب الحالي (instance=book) → عشان يتم تعديل نفس الكائن، مش إنشاء كائن جديد.
         if form.is_valid():
             form.save()
             return redirect('book_list')
-    else:
+    else: # غالبًا المستخدم بس فتح الصفحة
         form = BookForm(instance=book)
-    return render(request, 'relationship_app/book_form.html', {'form': form})
+    
+    return render(request, 'relationship_app/book_form.html', {'form': form})  #send key 'form' which has value form to page: book_form.html
 
 @permission_required('relationship_app.can_delete_book', raise_exception=True)  #in models.py
 def delete_book(request, pk):
@@ -114,4 +116,7 @@ def delete_book(request, pk):
     if request.method == 'POST':
         book.delete()
         return redirect('book_list')
+    
     return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
+
+#_________________

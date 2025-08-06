@@ -11,7 +11,7 @@ class Author(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
-    class Meta:           #for adding specific permissions
+    class Meta:           #'meta' class used for adding specific permissions
         permissions = [
             ("can_add_book", "Can add book"),      #name in database and name in forms
             ("can_change_book", "Can change book"),

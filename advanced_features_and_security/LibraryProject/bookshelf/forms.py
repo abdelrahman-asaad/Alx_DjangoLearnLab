@@ -7,8 +7,8 @@ class ExampleForm(forms.ModelForm):
         fields = ['title', 'author']
 
     def clean_title(self):
-        title = self.cleaned_data.get('title') #to protect from xss if user tried to include javascript <script> code
-        if "<script>" in title:
+        title = self.cleaned_data.get('title') #to clean field 'title'
+        if "<script>" in title:                #to protect from xss if user tried to include javascript <script> code
             raise forms.ValidationError("Invalid title")
         return title
 

@@ -157,11 +157,26 @@ X_FRAME_OPTIONS:'DENY' # Set to "DENY" to prevent your site from being framed an
 SECURE_CONTENT_TYPE_NOSNIFF:True # Set to True to prevent browsers from MIME-sniffing a response away from the declared content-type.
 SECURE_BROWSER_XSS_FILTER:True # Set to True to enable the browser’s XSS filtering and help prevent cross-site scripting attacks.
 
+# Useful when your app is behind a proxy (e.g., Nginx, Heroku, AWS ELB)
 # Tell Django it’s behind a secure proxy and to trust the X-Forwarded-Proto header
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # إذا كانت البنية التحتية تستخدم HTTPS خلف بروكسي مثل Nginx أو Heroku
+## Meaning: If the request contains the header 'HTTP_X_FORWARDED_PROTO=https', Django will treat the request as secure (HTTPS)
 
 
+#instead
+'''if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'''
 
+
+#summary
 '''# SECURITY.md
 تم إنشاء ملف توثيق أمني باسم Security Documentation يحتوي على كافة التعديلات التي تم تطبيقها لتأمين تطبيق Django الخاص بك، خاصة ما يتعلق بـ HTTPS والإعدادات المرتبطة به مثل:
 
