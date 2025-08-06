@@ -31,7 +31,8 @@ class BookCreateView(generics.CreateAPIView): #CreateAPIView is used for creatin
         serializer.save()
 
 #perfom_create is a built-in method that allows you to customize the save behavior
-# when creating a new object. 
+# when creating a new object. -and it is called automatically when you 
+# submit a POST request to the view 'BookCreateView'.
 # it takes a serializer instance as an argument and allows you to call save() on it.
 # This is useful for adding additional logic or fields before saving the object.    
 #serializer is an built-in instance of the serializer class 'BookSerializer' that is used to validate 
