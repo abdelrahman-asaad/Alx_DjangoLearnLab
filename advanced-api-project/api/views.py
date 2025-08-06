@@ -1,5 +1,5 @@
 # Create your views here.
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .serializers import BookSerializer
@@ -12,9 +12,26 @@ class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]  # Public access
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['title', 'author', 'publication_year']
 #permission_classes is built-in to DRF and allows you to set permissions for the view.
+
+# ✅ تمكين الفلترة والبحث والترتيب
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+
+    # ✅ تحديد الحقول المتاحة للفلترة
+    filterset_fields = ['title', 'author__name', 'publication_year']
+
+    # ✅ تحديد الحقول المتاحة للبحث النصي
+    search_fields = ['title', 'author__name']
+
+    # ✅ تحديد الحقول المتاحة للترتيب
+    ordering_fields = ['title', 'publication_year']
+
+    # (اختياري) الترتيب الافتراضي
+    ordering = ['title']
 
 
 # Retrieve a single book by ID (GET /books/<id>/)
