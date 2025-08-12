@@ -125,9 +125,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#STATICFILES_DIRS = [ #    BASE_DIR / "static",  # Directory for static files in the root directory
-#    BASE_DIR / "static",  # Directory for static files
-#]
+STATICFILES_DIRS = [ #    BASE_DIR / "static",  # Directory for static files in the root directory
+    BASE_DIR / "static",  # Directory for static files
+]
 
 #TEMPLATES = [  #alternative way to define templates
 #    {
