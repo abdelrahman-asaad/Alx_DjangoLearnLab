@@ -129,6 +129,10 @@ STATICFILES_DIRS = [ #    BASE_DIR / "static",  # Directory for static files in 
     BASE_DIR / "static",  # Directory for static files
 ]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"  # لتجميعهم لما تشغل collectstatic
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 #TEMPLATES = [  #alternative way to define templates
 #    {
 #        'DIRS': [BASE_DIR / 'templates'],  # Directory for templates
