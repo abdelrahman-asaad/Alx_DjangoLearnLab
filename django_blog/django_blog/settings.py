@@ -124,10 +124,10 @@ USE_TZ = True
 #STATIC_URL = 'static/'
 
 STATIC_URL = '/static/'
-import os
-STATICFILES_DIRS = [ #    BASE_DIR / "static",  # Directory for static files in the root directory
-    BASE_DIR / "static",  # Directory for static files
-]
+
+#STATICFILES_DIRS = [ #    BASE_DIR / "static",  # Directory for static files in the root directory
+#    BASE_DIR / "static",  # Directory for static files
+#]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"  # لتجميعهم لما تشغل collectstatic
 
