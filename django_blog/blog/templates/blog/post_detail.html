@@ -1,12 +1,13 @@
-{% extends "base.html" %}
-{% block title %}{{ object.title }}{% endblock %}
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
-<p>By {{ object.author }} - {{ object.created_at }}</p>
-
-{% if user == object.author %}
-    <a href="{% url 'post-update' object.pk %}">Edit</a>
-    <a href="{% url 'post-delete' object.pk %}">Delete</a>
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<p>Published: {{ post.published_date }}</p>
+{% if user == post.author %}
+    <a href="{% url 'post-update' post.pk %}">Edit</a> |
+    <a href="{% url 'post-delete' post.pk %}">Delete</a>
 {% endif %}
+<a href="{% url 'post-list' %}">Back to all posts</a>
 {% endblock %}
+

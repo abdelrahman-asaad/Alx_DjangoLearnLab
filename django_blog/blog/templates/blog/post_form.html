@@ -1,12 +1,12 @@
-{% extends "base.html" %}
-{% block title %}{{ object.title }}{% endblock %}
+{% extends "blog/base.html" %}
+{% block title %}New Post{% endblock %}
 {% block content %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
-<p>By {{ object.author }} - {{ object.created_at }}</p>
-
-{% if user == object.author %}
-    <a href="{% url 'post-update' object.pk %}">Edit</a>
-    <a href="{% url 'post-delete' object.pk %}">Delete</a>
-{% endif %}
+<h1>{% if form.instance.pk %}Edit Post{% else %}New Post{% endif %}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'post-list' %}">Cancel</a>
 {% endblock %}
+
