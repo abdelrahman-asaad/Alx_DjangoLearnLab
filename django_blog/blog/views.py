@@ -38,6 +38,8 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     template_name = 'blog/logout.html'
     next_page = 'post-list'
+    http_method_names = ['get', 'post']  # Add this line
+    #http_method_names restricts the view to only GET and POST requests
 
 class PostListView(ListView):
     model = Post
