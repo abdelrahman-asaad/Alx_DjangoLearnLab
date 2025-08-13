@@ -1,13 +1,85 @@
 {% extends "blog/base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-<h1>{{ post.title }}</h1>
-<p>{{ post.content }}</p>
-<p>Published: {{ post.published_date }}</p>
-{% if user == post.author %}
-    <a href="{% url 'post-update' post.pk %}">Edit</a> |
-    <a href="{% url 'post-delete' post.pk %}">Delete</a>
-{% endif %}
-<a href="{% url 'post-list' %}">Back to all posts</a>
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <p class="post-meta">
+        By {{ post.author.username }} on {{ post.published_date|date:"F j, Y" }}
+    </p>
+    <p>
+  Tags:
+  {% for tag in post.tags.all %}
+    <a href="{% url 'tag-posts' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+  {% empty %}
+    No tags.
+  {% endfor %}
+   </p>
+    
+    <div class="post-content">
+        {{ post.content|linebreaks }}
+    </div>
+    
+    {% if user == post.author %}
+        <div class="post-actions">
+            <a href="{% url 'post-update' post.pk %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'post-delete' post.pk %}" class="btn btn-delete">Delete</a>
+        </div>
+    {% endif %}
+    
+    <hr>
+    
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h3>Comments ({{ comments.count }})</h3>
+        
+        <!-- Add Comment Form (for authenticated users only) -->
+        {% if user.is_authenticated %}
+            <div class="add-comment">
+                <h4>Add a Comment</h4>
+                <form method="post" action="{% url 'add-comment' post.pk %}">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+            <hr>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
+            <hr>
+        {% endif %}
+        
+        <!-- Display Comments -->
+        <div class="comments-list">
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        <strong>{{ comment.author.username }}</strong>
+                        <span class="comment-date">{{ comment.created_at|date:"M j, Y g:i A" }}</span>
+                        {% if comment.updated_at != comment.created_at %}
+                            <span class="edited">(edited)</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="comment-content">
+                        {{ comment.content|linebreaks }}
+                    </div>
+                    
+                    {% if user == comment.author %}
+                        <div class="comment-actions">
+                            <a href="{% url 'comment-edit' comment.pk %}" class="btn btn-sm">Edit</a>
+                            <a href="{% url 'comment-delete' comment.pk %}" class="btn btn-sm btn-delete">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <hr>
+            {% empty %}
+                <p>No comments yet. Be the first to comment!</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="post-navigation">
+        <a href="{% url 'post-list' %}">← Back to all posts</a>
+    </div>
+</div>
 {% endblock %}
-

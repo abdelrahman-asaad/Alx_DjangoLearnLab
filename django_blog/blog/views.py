@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Post, Comment
 
+
 # Your existing views stay the same
 def register(request):
     from .forms import CustomUserCreationForm
@@ -66,7 +67,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'blog/post_form.html'
     fields = ['title', 'content']
     
-    def form_valid(self, form):
+    def form_valid(self, form): #form_valid is built-in method in CreateView class
         form.instance.author = self.request.user
         messages.success(self.request, 'Post created successfully!')
         return super().form_valid(form)
@@ -76,12 +77,12 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'blog/post_form.html'
     fields = ['title', 'content']
 
-    def form_valid(self, form):
+    def form_valid(self, form): #form_valid is built-in method in UpdateView class
         form.instance.author = self.request.user
         messages.success(self.request, 'Post updated successfully!')
         return super().form_valid(form)
 
-    def test_func(self):
+    def test_func(self):  # test_func is built in method in UserPassesTestMixin class
         post = self.get_object()
         return self.request.user == post.author
 
@@ -138,3 +139,34 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.post.pk})
+    
+    #_____________
+from taggit.models import Tag
+from django.db.models import Q
+
+class TagPostListView(ListView):
+      model = Post
+      template_name = 'blog/tag_posts.html'
+      context_object_name = 'posts' #posts is the context variable name used in the template
+
+      def get_queryset(self):
+         self.tag = get_object_or_404(Tag, slug=self.kwargs.get('tag_slug'))
+         return Post.objects.filter(tags__in=[self.tag])
+
+      def get_context_data(self, **kwargs):
+         context = super().get_context_data(**kwargs)
+         context['tag'] = self.tag
+         return context
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'blog/search_results.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
