@@ -144,12 +144,12 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 from taggit.models import Tag
 from django.db.models import Q
 
-class TagPostListView(ListView):
+class PostByTagListView(ListView): #this view is to 
       model = Post
       template_name = 'blog/tag_posts.html'
       context_object_name = 'posts' #posts is the context variable name used in the template
 
-      def get_queryset(self):
+      def get_queryset(self): #get queryset is built-in method
          self.tag = get_object_or_404(Tag, slug=self.kwargs.get('tag_slug'))
          return Post.objects.filter(tags__in=[self.tag])
 
