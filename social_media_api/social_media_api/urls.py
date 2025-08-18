@@ -21,5 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("accounts.urls")),
     #ex: http://127.0.0.1:8000/accounts/register/
+    
+    path("api/", include("posts.urls")),
+#ex: http://127.0.0.1:8000/api/posts/
 
 ]
