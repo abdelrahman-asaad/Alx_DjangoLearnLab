@@ -41,6 +41,10 @@ class CustomLogoutView(LogoutView):
     next_page = 'post-list'
     http_method_names = ['get', 'post']  # Add this line
     #http_method_names restricts the view to only GET and POST requests
+    def logout_view(request):
+        from django.contrib import logout
+        logout(request)
+        return redirect('home')
 
 class PostListView(ListView):
     model = Post
@@ -65,7 +69,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'tags'] #these fields to be shown in creating post view
     
     def form_valid(self, form): #form_valid is built-in method in CreateView class
         form.instance.author = self.request.user
