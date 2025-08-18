@@ -25,4 +25,8 @@ urlpatterns = [
     path("api/", include("posts.urls")),
 #ex: http://127.0.0.1:8000/api/posts/
 
+    path("notifications/", include("notifications.urls")),
+    path("api-auth/", include("rest_framework.urls")),
+    #DRF browsable api >> login/logout in api
+
 ]

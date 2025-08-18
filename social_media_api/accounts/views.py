@@ -34,7 +34,9 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
-    
+
+
+#views for follow and unfollow users
 '''from rest_framework import generics.GenericAPIView", "permissions.IsAuthenticated", "CustomUser.objects.all()'''
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes

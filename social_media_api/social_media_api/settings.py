@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework', #for api views creation
     'rest_framework.authtoken', #for token authentcation
     'posts',
+    'notifications'
 ]
 AUTH_USER_MODEL = "accounts.CustomUser"
 REST_FRAMEWORK = {
