@@ -35,7 +35,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
     
-
+'''from rest_framework import generics.GenericAPIView", "permissions.IsAuthenticated", "CustomUser.objects.all()'''
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
