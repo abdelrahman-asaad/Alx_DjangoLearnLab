@@ -53,6 +53,7 @@ def feed_view(request): #function based view
     return Response(serializer.data)
 
 #_____like and unlike views
+from rest_framework import generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -87,7 +88,7 @@ def like_post(request, pk): #function based view
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def unlike_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = generics.get_object_or_404(Post, pk=pk)
     like = Like.objects.filter(user=request.user, post=post)
     if like.exists():
         like.delete()
