@@ -81,10 +81,16 @@ WSGI_APPLICATION = "social_media_api.wsgi.application"
 # Database
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',   # أو mysql حسب القاعدة
+        'NAME': os.getenv('DB_NAME', 'social_media_api'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),  # هنا أضفنا الـ PORT
+    }
 }
+
 
 
 # Password validation
