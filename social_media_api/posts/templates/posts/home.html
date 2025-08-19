@@ -1,0 +1,9 @@
+{% extends "posts/base.html" %}
+
+{% block title %}Home - My Posts{% endblock %}
+
+{% block content %}
+    <h2>Welcome to My Posts App!</h2>
+    <p>This is a test homepage using Django templates & static files.</p>
+    <img src="{% static 'posts/images/logo.png' %}" alt="Logo">
+{% endblock %}

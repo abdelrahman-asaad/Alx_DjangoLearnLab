@@ -1,6 +1,11 @@
 from rest_framework import viewsets, permissions, filters
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+from django.shortcuts import render
+
+def home(request):
+    return render(request, "posts/home.html")
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission): # creating custom permission
     def has_object_permission(self, request, view, obj): #built-in method for view permission in DRF
